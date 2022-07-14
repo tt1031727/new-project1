@@ -15,7 +15,7 @@ const config: PlaywrightTestConfig = {
   testDir: './tests/spec',
   /* Maximum time one test can run for. */
   
-  timeout: 30 * 1000,
+  timeout: 30 * 2000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -42,12 +42,20 @@ const config: PlaywrightTestConfig = {
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
+    headless: false,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
 
   /* Configure projects for major pages */
- 
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+    },
+
 
     /* Test against mobile viewports. */
     // {
@@ -76,7 +84,7 @@ const config: PlaywrightTestConfig = {
     //     channel: 'chrome',
     //   },
     // },
-
+  ],
   
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   // outputDir: 'test-results/',
