@@ -27,7 +27,7 @@ export class SignInPage {
     }
 
     async setLogin() {
-       await this.loginField.fill('test123002')
+       await this.loginField.fill('test0023')
     }
 
     async setPass() {
