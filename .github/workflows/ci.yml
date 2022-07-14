@@ -46,11 +46,27 @@ jobs:
         allure_report: allure-report
         allure_history: allure-history
         keep_reports: 20
-
-    - name: Deploy report to Github Pages
+    - name: Generate Report
       if: always()
-      uses: peaceiris/actions-gh-pages@v2
-      env:
-        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: main
-        PUBLISH_DIR: allure-history
+      run: npm run allureGenerate # Name of the allure generate script
+    - name: Upload Results
+      uses: actions/upload-artifact@v1
+      if: always()        
+      with:
+          name: allure-results
+          path: ./allure-results # Name of the folder with allure results 
+                   
+    - name: Publishing Allure artifact to Github Actions
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+           name: allure-report
+           path: allure-report       
+    - name: Deploy report
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      if: always()
+      with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: allure-report # The folder the action should deploy.
+
+    
